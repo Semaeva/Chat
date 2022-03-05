@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 using ChatApplication.ChatHub;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using ChatApplication.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ChatApplication
 {
@@ -24,7 +28,21 @@ namespace ChatApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+           // services.AddDbContext<AppContext>(options => options.UseSqlServer(connection));
+
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(connection));
+
             services.AddSignalR();
+
+            // установка конфигурации подключения
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+
             services.AddControllersWithViews();
         }
 
@@ -46,11 +64,21 @@ namespace ChatApplication
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();    // аутентификация
+            app.UseAuthorization();     // авторизация
+
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<Chathub>("/chathub");
+                endpoints.MapHub<Chathub>("/chathub",
+                    options => {
+                        options.ApplicationMaxBufferSize = 64;
+                        options.TransportMaxBufferSize = 64;
+                        options.LongPolling.PollTimeout = System.TimeSpan.FromMinutes(1);
+                        options.Transports = HttpTransportType.LongPolling | HttpTransportType.WebSockets;
+                    });
+
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
