@@ -12,18 +12,29 @@
 
   
 
-        <table class="table">
+  
+
+     <main class="content">
+    <div class="container p-0">
+
+    <h1 class="h3 mb-3">Messages</h1>
+
+    <div class="card">
+      <div class="row g-0">
+        <div class="col-12 col-lg-5 col-xl-3 border-right">
+
+          <div class="px-4 d-none d-md-block">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <input type="text" class="form-control my-3" placeholder="Search...">
+                      <table class="table">
             <thead>
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.id)
-                    </th>
-                    <th>
+
+                   @* <th>
                         @Html.DisplayNameFor(model => model.name)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.passw)
-                    </th>
+*@
                     <th></th>
                 </tr>
             </thead>
@@ -31,135 +42,178 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.id)
-                        </td>
-                        <td>
+                       @* <td>
+                           
                             @Html.DisplayFor(modelItem => item.name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.passw)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Чат", "Chat", new { id = item.id }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                        </td>
+                        </td>*@
+                        <td id="demo"></td>
+
                     </tr>
                 }
             </tbody>
         </table>
 
 
-        @*
-            <div id="loginBlock">
-                Введите логин:<br />
-                <input id="userName" name="userName" type="text" />
-                <input id="loginBtn" type="button" value="Войти" />
-                <button type="submit">ok</button>
-            </div><br />
-
-            <div id="header"></div><br />
-
-            <div id="inputForm">
-                <input type="text" id="message" />
-                <input type="button" id="sendBtn" value="Отправить" />
+              </div>
             </div>
-            <div id="chatroom"></div>
-            <script src="js/signalr/dist/browser/signalr.min.js"></script>
-            <script>
-                const hubConnection = new signalR.HubConnectionBuilder() //Чтобы подключиться к хабу
-                    .withUrl("/chathub")
-                    .configureLogging(signalR.LogLevel.Information)
-                    .build();
+          </div>
 
-                let userName = '';
-                // получение сообщения от сервера
-                hubConnection.on('Send', function (message, userName) {
+          <hr class="d-block d-lg-none mt-1 mb-0">
+        </div>
+        <div class="col-12 col-lg-7 col-xl-9">
+        
 
+          <div class="position-relative">
+            <div class="chat-messages p-4">
+               
+              <div class="chat-message-right pb-4">
+                <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                  <div class="font-weight-bold mb-1 parent-div">You</div> 
+                                    <div id="right_chat"></div>
+                                  
+                                </div>
+              </div>
+              <div class="chat-message-left pb-4">
+                <div>
+                  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                  <div class="text-muted small text-nowrap mt-2">2:34 am</div>
+                </div>
+                <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                  <div class="font-weight-bold mb-1">
+                                       <div id="left_chat"></div>
+                                       <div id="perosnHandler"></div>
+                                     
+                       </div>
+                            
+                                    </div>
+              </div>
 
-            console.log(message);
-            console.log(userName);
+                         <div   class="chat-message-right pb-4">
+                <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                  <div class="font-weight-bold mb-1 parent-div"></div>
+                        
+                                  @*    <input type="text" id="msg" name="msg" />
+                                     <input type="text" id="nameUser" name="nameUser" value="@ViewBag.name" hidden/>*@
+@*                                     <button type="button" class="btn" id="sendBtn" onclick="submitStudent()">Submit</button>*@
+   <div id="inputForm">
+        <input type="text" id="message" />
+        <input type="button" id="sendBtn" value="Отправить" />
+    </div>
+    <div id="chatroom"></div>
+    
 
-                    // создаем элемент <b> для имени пользователя
-                    let userNameElem = document.createElement("b");
-                    userNameElem.appendChild(document.createTextNode(userName + ': '));
+                                          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+ 
 
-                    // создает элемент <p> для сообщения пользователя
-                    let elem = document.createElement("p");
-                    elem.appendChild(userNameElem);
-                    elem.appendChild(document.createTextNode(message));
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                    var firstElem = document.getElementById("chatroom").firstChild;
-                    document.getElementById("chatroom").insertBefore(elem, firstElem);
+<script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+       let userName = "";
+        // получение сообщения от сервера
+        hubConnection.on("Receive", function (message, name) {
+ 
+            // создаем элемент <b> для имени пользователя
+            let userNameElem = document.createElement("b");
+            userNameElem.appendChild(document.createTextNode(name + ": "));
+ 
+            // создает элемент <p> для сообщения пользователя
+            let elem = document.createElement("p");
+            elem.appendChild(userNameElem);
+            elem.appendChild(document.createTextNode(message));
+ 
+            var firstElem = document.getElementById("chatroom").firstChild;
+            document.getElementById("chatroom").insertBefore(elem, firstElem);
+ 
+        });
+        // диагностическое сообщение
+        hubConnection.on("Notify", function (message) {
 
-                });
+            let elem = document.createElement("p");
+            elem.appendChild(document.createTextNode(message));
+ 
+            var firstElem = document.getElementById("chatroom").firstChild;
+            document.getElementById("chatroom").insertBefore(elem, firstElem);
+        });
+ 
+        // установка имени пользователя
+        //document.getElementById("loginBtn").addEventListener("click", function (e) {
+        //    userName = document.getElementById("userName").value;
+        //    hubConnection.invoke("Enter", userName);
+        //});
 
-                // установка имени пользователя
-                document.getElementById("loginBtn").addEventListener("click", function (e) {
-                    userName = document.getElementById("userName").value;
-                    document.getElementById("header").innerHTML = '<h3>Welcome ' + userName + '</h3>';
-                });
+          hubConnection.on("PerosnHandler", function (list) {
+              console.log(list);
+             var list_=  JSON.parse( list );
+              document.getElementById("demo").innerHTML=list_;
+          });
 
+        // отправка сообщения на сервер
+        document.getElementById("sendBtn").addEventListener("click", function (e) {
+            let message = document.getElementById("message").value;
+            hubConnection.invoke("Send", message, userName);
+        });
+ 
+        hubConnection.start();
+    </script>
 
-
-                hubConnection.on('Notify', function (message) {
-                    document.getElementById("status").innerText = message;
-                });
-
-                  // отправка сообщения на сервер
-                document.getElementById("sendBtn").addEventListener("click", function (e) {
-                    let product = document.getElementById("product").value;
-                    hubConnection.invoke('Send', product);
-                    document.getElementById("product").value = "";
-                });
-
-                // отправка сообщения на сервер
-                document.getElementById("sendBtn").addEventListener("click", function (e) {
-                    let message = document.getElementById("message").value;
-                    hubConnection.invoke("Send", message, userName);//Для отправки данных хабу у объекта HubConnection
-                });
-
-                hubConnection.start();
-            </script>*@
-
-
-
-
-        @*<form action='@Url.Action("Create")' method="post">
-                    <input type="text" name="msg" />
-                    <input type="submit" value="Отправить" />
-                </form>
-
-
-            <div id="notify"></div>
-
-            <script src="js/signalr/dist/browser/signalr.min.js"></script>
-            <script>
-                const hubConnection = new signalR.HubConnectionBuilder()
-                    .withUrl("/chathub")
-                    .build();
-
-
-
-
-                // получение сообщения от сервера
-                hubConnection.on('Notify', function (message) {
-
-                    // установка имени пользователя
-                    document.getElementById("btn").addEventListener("click", function (e) {
-                        //userName = document.getElementById("userName").value;
-                        document.getElementById("header").innerHTML = '<h3>Welcome ' + message + '</h3>';
-                    });
-
-                    // создает элемент <p> для сообщения пользователя
-                    let elem = document.createElement("p");
-                    elem.appendChild(document.createTextNode(message));
-
-                    document.getElementById("notify").appendChild(elem);
-
-                });
-                hubConnection.start();
-            </script>*@
     </body>
 </html>
+<style>
+  body{margin-top:20px;}
+
+.chat-online {
+    color: #34ce57
+}
+
+.chat-offline {
+    color: #e4606d
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+    overflow-y: scroll
+}
+
+.chat-message-left,
+.chat-message-right {
+    display: flex;
+    flex-shrink: 0
+}
+
+.chat-message-left {
+    margin-right: auto
+}
+
+.chat-message-right {
+    flex-direction: row-reverse;
+    margin-left: auto
+}
+.py-3 {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+}
+.px-4 {
+    padding-right: 1.5rem!important;
+    padding-left: 1.5rem!important;
+}
+.flex-grow-0 {
+    flex-grow: 0!important;
+}
+.border-top {
+    border-top: 1px solid #dee2e6!important;
+}
+
+
+
+</style>

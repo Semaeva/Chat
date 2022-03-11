@@ -35,6 +35,7 @@ namespace ChatApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+          
                 Person user = await db.Person.FirstOrDefaultAsync(u => u.name == model.name && u.passw == model.passw);
                 if (user != null)
                 {
@@ -42,14 +43,14 @@ namespace ChatApplication.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Неверно ввели логин и(или) пароль");
             }
             return View(model);
         }
 
         private async Task Authenticate(string userName)
         {
-            // создаем один claim
+            // создаем один claim- механизм авторизации
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userName)

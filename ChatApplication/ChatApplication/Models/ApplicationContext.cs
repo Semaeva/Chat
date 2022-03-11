@@ -12,7 +12,7 @@ namespace ChatApplication.Models
         public class ApplicationContext : DbContext
         {
             public DbSet<Person> Person { get; set; }
-             public DbSet<Chat> Chats { get; set; }
+             public DbSet<Chat> Chat { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
                 : base(options)

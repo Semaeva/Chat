@@ -10,8 +10,9 @@ namespace ChatApplication.Models
         public int id { get; set; }
         public string msg { get; set; }
        
-        public int personId { get; set; }
+        public int personID { get; set; }
         public Person Person { get; set; }
+        public string date_time { get; set; }
 
     }
 }

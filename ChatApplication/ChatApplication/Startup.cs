@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ChatApplication.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Http;
 
 namespace ChatApplication
 {
@@ -29,7 +31,7 @@ namespace ChatApplication
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-           // services.AddDbContext<AppContext>(options => options.UseSqlServer(connection));
+            // services.AddDbContext<AppContext>(options => options.UseSqlServer(connection));
 
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connection));
@@ -41,8 +43,16 @@ namespace ChatApplication
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.LogoutPath = new PathString("/Account/Logout/");
+
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+
                 });
 
+            services.ConfigureApplicationCookie(identityOptionsCookies =>
+            {
+                identityOptionsCookies.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            });
             services.AddControllersWithViews();
         }
 
@@ -67,6 +77,7 @@ namespace ChatApplication
             app.UseAuthentication();    // аутентификация
             app.UseAuthorization();     // авторизация
 
+        
 
             app.UseEndpoints(endpoints =>
             {
