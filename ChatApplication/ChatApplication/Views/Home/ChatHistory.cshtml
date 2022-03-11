@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ChatApplication.Models.Chat>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>SignalR Chat</title>
+</head>
+<body>
+
+     <table class="table">
+            <thead>
+                <tr>
+                   <th>
+                @Html.DisplayNameFor(model => model.msg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Person.name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.date_time)
+            </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.msg)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Person.name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.date_time)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+  </body>
+  </html>

@@ -8,11 +8,7 @@
     <title>SignalR Chat</title>
 </head>
 <body>
-    <a asp-action="Chat" asp-route-id="@ViewBag.id" asp-controller="home">Групповой чат</a>
-
-  
-
-  
+    <a asp-action="ChatHistory" asp-route-id="@ViewBag.id" asp-controller="home">История чата</a>
 
      <main class="content">
     <div class="container p-0">
@@ -30,11 +26,6 @@
                       <table class="table">
             <thead>
                 <tr>
-
-                   @* <th>
-                        @Html.DisplayNameFor(model => model.name)
-                    </th>
-*@
                     <th></th>
                 </tr>
             </thead>
@@ -42,12 +33,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                       @* <td>
-                           
-                            @Html.DisplayFor(modelItem => item.name)
-                        </td>*@
                         <td id="demo"></td>
-
                     </tr>
                 }
             </tbody>
@@ -81,8 +67,7 @@
                 <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
                   <div class="font-weight-bold mb-1">
                                        <div id="left_chat"></div>
-                                       <div id="perosnHandler"></div>
-                                     
+                                       <div id="perosnHandler"></div>                                  
                        </div>
                             
                                     </div>
@@ -91,10 +76,6 @@
                          <div   class="chat-message-right pb-4">
                 <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                   <div class="font-weight-bold mb-1 parent-div"></div>
-                        
-                                  @*    <input type="text" id="msg" name="msg" />
-                                     <input type="text" id="nameUser" name="nameUser" value="@ViewBag.name" hidden/>*@
-@*                                     <button type="button" class="btn" id="sendBtn" onclick="submitStudent()">Submit</button>*@
    <div id="inputForm">
         <input type="text" id="message" />
         <input type="button" id="sendBtn" value="Отправить" />
@@ -143,12 +124,6 @@
             var firstElem = document.getElementById("chatroom").firstChild;
             document.getElementById("chatroom").insertBefore(elem, firstElem);
         });
- 
-        // установка имени пользователя
-        //document.getElementById("loginBtn").addEventListener("click", function (e) {
-        //    userName = document.getElementById("userName").value;
-        //    hubConnection.invoke("Enter", userName);
-        //});
 
           hubConnection.on("PerosnHandler", function (list) {
               console.log(list);

@@ -75,7 +75,6 @@ namespace ChatApplication.ChatHub
                 msg = message,
                 personID = personId,
                 date_time = DateTime.Now.ToShortTimeString().ToString(),
-                // Person= person
             };
 
             db.Chat.Add(chat);

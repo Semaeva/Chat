@@ -50,7 +50,6 @@ E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplic
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.TagHelpers.input.cache
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.TagHelpers.output.cache
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.RazorCoreGenerate.cache
-E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Home\ChatRoom.cshtml.g.cs
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
@@ -146,10 +145,9 @@ E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplic
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.dll
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.pdb
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.genruntimeconfig.cache
-E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Home\Chat.cshtml.g.cs
-E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Home\PrivateChat.cshtml.g.cs
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.csproj.AssemblyReference.cache
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.GeneratedMSBuildEditorConfig.editorconfig
 E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\ChatApplication.csproj.CoreCompileInputs.cache
+E:\c# trainig\ChatApplication\ChatApplication\obj\Debug\netcoreapp3.1\Razor\Views\Home\ChatHistory.cshtml.g.cs
