@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -70,12 +71,19 @@ namespace ChatApplication.ChatHub
             .Where(c => c.name == name)
             .Select(s => s.id)
             .FirstOrDefault();
+
+            //DateTimeFormatInfo formatInfo = CultureInfo.CurrentUICulture.DateTimeFormat;
+            //var value = DateTime.Now.ToString(formatInfo);
+            var localDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+
+          
             Chat chat = new Chat
             {
                 msg = message,
                 personID = personId,
-                date_time = DateTime.Now.ToShortTimeString().ToString(),
-            };
+                // date_time = DateTime.Now.ToShortTimeString().ToString(),
+                d_time = DateTime.Now
+        };
 
             db.Chat.Add(chat);
             try

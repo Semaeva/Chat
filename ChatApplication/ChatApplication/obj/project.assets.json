@@ -9257,11 +9257,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\c# trainig\\ChatApplication\\ChatApplication\\ChatApplication.csproj",
+      "projectUniqueName": "E:\\c# trainig\\gitMain\\Chat\\ChatApplication\\ChatApplication\\ChatApplication.csproj",
       "projectName": "ChatApplication",
-      "projectPath": "E:\\c# trainig\\ChatApplication\\ChatApplication\\ChatApplication.csproj",
+      "projectPath": "E:\\c# trainig\\gitMain\\Chat\\ChatApplication\\ChatApplication\\ChatApplication.csproj",
       "packagesPath": "C:\\Users\\Sema\\.nuget\\packages\\",
-      "outputPath": "E:\\c# trainig\\ChatApplication\\ChatApplication\\obj\\",
+      "outputPath": "E:\\c# trainig\\gitMain\\Chat\\ChatApplication\\ChatApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

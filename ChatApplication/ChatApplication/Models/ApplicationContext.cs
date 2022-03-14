@@ -19,7 +19,8 @@ namespace ChatApplication.Models
             {
                 Database.EnsureCreated();   // создаем базу данных при первом обращении
             }
-        }
+     
+    }
 
     }
 
