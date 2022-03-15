@@ -24,21 +24,20 @@
                     <a asp-action="ChatHistory" asp-route-sortOrder="@ViewData["DateSort"]">@Html.DisplayNameFor(model => model.d_time)</a>
                 </th>
                 <th>
-             @*    <a asp-action="ChatHistory" asp-route-sortOrder="@ViewData["DateInterval"]">*@
-@*                     @Html.DisplayNameFor(model => model.date_time)*@
+           
+ 
+
 
 <form asp-controller="Home" asp-action="ChatHistory" method="post">
                      <input type="datetime-local" name="dateBegin"  />
                      <input type="datetime-local" name="dateEnd"  />
 
-
-
-                   @*      <input type="date" name="dateBegin" 
-        placeholder="dd-mm-yyyy">
-        <input type="date" name="dateEnd" 
-        placeholder="dd-mm-yyyy" >*@
                      <input type="submit" class="btn" value ="Send" />
-                     </form>
+
+                       <input type="text" name="searcSrtring" />
+                      <input type="submit" class="btn" value ="Filter" />
+</form>
+
                 @* </a>*@
 
                 </th>

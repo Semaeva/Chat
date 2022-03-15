@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Globalization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ChatApplication.Controllers
 {
@@ -40,7 +41,6 @@ namespace ChatApplication.Controllers
         {
             ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSort"] = sortOrder == "date_time" ? "date_desc" : "date_time";
-            ViewData["DateInterval"] = sortOrder == "dateInterval";
             var sorting = from s in db.Chat
                            select s;
             switch (sortOrder)
@@ -49,40 +49,40 @@ namespace ChatApplication.Controllers
                     sorting = sorting.OrderByDescending(s => s.Person.name);
                     break;
                 case "date_time":
-                    sorting = sorting.OrderBy(s => s.d_time);//нужно сделать диапозон
+                    sorting = sorting.OrderBy(s => s.d_time);//по времени
                     break;
-
                 case "date_desc":
                     sorting = sorting.OrderByDescending(s => s.d_time);
-                    break;
-                    case "dateInterval":
-                        sorting.Where(s=> s.d_time >= DateTime.Parse(dateBegin) && s.d_time <= DateTime.Parse(dateEnd)).ToList();
                     break;
                 default:
                     sorting = sorting.OrderBy(s => s.Person.name);
                     break;
             }
-          var list=  sorting.Include(s => s.Person).ToList();
+
+            var list=  sorting.Include(s => s.Person).ToList();
             return View(list);
         }
 
-        [HttpPost]
-        public IActionResult ChatHistory(DateTime dateBegin, DateTime dateEnd)
-        {
 
-            try
+        [HttpPost]
+        public IActionResult ChatHistory(DateTime dateBegin, DateTime dateEnd, string searcSrtring)//фильтрация по дате и фильрация по имени пользователя в чате
+        {
+            var list = from s in db.Chat
+                       select s;
+            if (searcSrtring !=null)
             {
-                var list = from s in db.Chat
-                           select s;
+                var list_ = list.Where(x=>x.Person.name == searcSrtring)
+                       .Include(s => s.Person).ToList();
+                return View(list_);
+            }
+            try
+            {          
              var list_ =  list.Where(x => x.d_time >= dateBegin && x.d_time <= dateEnd)
                     .Include(s => s.Person).ToList(); 
                 return View(list_);
-
             }
             catch (Exception ex) { };
-
             return View();
-
         }
 
         public IActionResult Privacy()

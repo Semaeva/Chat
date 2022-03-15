@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,10 @@ namespace ChatApplication.Models
         public Person Person { get; set; }
         [Display(Name = "Дата")]
         public DateTime d_time { get; set; }
+
+
+
+
 
         //[Column(TypeName = "datetime")]
         //public DateTime Timestamp { get; set; }

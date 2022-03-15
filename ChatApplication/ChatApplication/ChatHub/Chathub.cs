@@ -19,8 +19,6 @@ namespace ChatApplication.ChatHub
     public class Chathub : Hub
     {
 
-
-
         ApplicationContext db;
         public Chathub(ApplicationContext context)
         {
@@ -29,14 +27,12 @@ namespace ChatApplication.ChatHub
 
         public static class PerosnHandler
         {
-            //public static List<string> ConnectedIds = new List<string>();
             public static List<string> ConnectedIds = new List<string>();
 
         }
 
 
-
-        string groupname = "cats";
+        string groupname = "myGroup";
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -72,8 +68,6 @@ namespace ChatApplication.ChatHub
             .Select(s => s.id)
             .FirstOrDefault();
 
-            //DateTimeFormatInfo formatInfo = CultureInfo.CurrentUICulture.DateTimeFormat;
-            //var value = DateTime.Now.ToString(formatInfo);
             var localDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
 
           
@@ -81,7 +75,6 @@ namespace ChatApplication.ChatHub
             {
                 msg = message,
                 personID = personId,
-                // date_time = DateTime.Now.ToShortTimeString().ToString(),
                 d_time = DateTime.Now
         };
 
@@ -94,8 +87,7 @@ namespace ChatApplication.ChatHub
             {
                 throw ex;
             }
-           
-           
+                    
             await Clients.Group(groupname).SendAsync("Receive", message, name);
         }
 
