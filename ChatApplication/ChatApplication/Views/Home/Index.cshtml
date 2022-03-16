@@ -32,7 +32,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td id="demo"></td>
+                        <td id="users"></td>
                     </tr>
                 }
             </tbody>
@@ -54,14 +54,18 @@
               <div class="chat-message-right pb-4">
                 <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                   <div class="font-weight-bold mb-1 parent-div">You</div> 
-                                    <div id="right_chat"></div>
+                                       <div id="inputForm">
+        <input type="text" id="message" />
+        <input type="button" id="sendBtn" value="Отправить" />
+    </div>
+       <div id="chatroom"></div>
                                   
                                 </div>
               </div>
               <div class="chat-message-left pb-4">
                 <div>
-                  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
-                  <div class="text-muted small text-nowrap mt-2">2:34 am</div>
+<img src="https://img.icons8.com/office/40/000000/chat.png"/>      
+<div class="text-muted small text-nowrap mt-2">2:34 am</div>
                 </div>
                 <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
                   <div class="font-weight-bold mb-1">
@@ -69,20 +73,12 @@
                                        <div id="perosnHandler"></div>                                  
                        </div>
                             
-                                    </div>
-              </div>
+                          </div>
+                         </div>
 
-                         <div   class="chat-message-right pb-4">
-                <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                  <div class="font-weight-bold mb-1 parent-div"></div>
-   <div id="inputForm">
-        <input type="text" id="message" />
-        <input type="button" id="sendBtn" value="Отправить" />
-    </div>
-    <div id="chatroom"></div>
+ 
     
-
-                                          </div>
+</div>
         </div>
       </div>
     </div>
@@ -98,10 +94,12 @@
             .withUrl("/chatHub")
             .build();
        let userName = "";
+
+
         // получение сообщения от сервера
         hubConnection.on("Receive", function (message, name) {
- 
-            // создаем элемент <b> для имени пользователя
+            console.log(message);
+                // создаем элемент <b> для имени идентификатора подключения
             let userNameElem = document.createElement("b");
             userNameElem.appendChild(document.createTextNode(name + ": "));
  
@@ -110,29 +108,34 @@
             elem.appendChild(userNameElem);
             elem.appendChild(document.createTextNode(message));
  
-            var firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem);
- 
-        });
+            var firstElem = document.getElementById("left_chat").firstChild;
+            document.getElementById("left_chat").insertBefore(elem, firstElem);
+        }); 
+
+            
         // диагностическое сообщение
         hubConnection.on("Notify", function (message) {
 
             let elem = document.createElement("p");
+            elem.id="nameUser";
             elem.appendChild(document.createTextNode(message));
  
             var firstElem = document.getElementById("chatroom").firstChild;
             document.getElementById("chatroom").insertBefore(elem, firstElem);
         });
 
-          hubConnection.on("PerosnHandler", function (list) {
-              console.log(list);
+        // подключенные клиенты
+          hubConnection.on("PerosnHandler", function (list) {   
              var list_=  JSON.parse( list );
-              document.getElementById("demo").innerHTML=list_;
-          });
-
+              document.getElementById("users").innerHTML=list_;
+              });
+   
         // отправка сообщения на сервер
         document.getElementById("sendBtn").addEventListener("click", function (e) {
             let message = document.getElementById("message").value;
+            const  userName =document.getElementById("nameUser").innerHTML;
+            var name =document.getElementById("nameUser").innerHTML;
+
             hubConnection.invoke("Send", message, userName);
         });
  

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -48,11 +49,10 @@ namespace ChatApplication.ChatHub
            var name = Context.User.Identity.Name;
             
             PerosnHandler.ConnectedIds.Add(name);
+
             var dupl = PerosnHandler.ConnectedIds.Distinct().ToList();
-
             var list = JsonSerializer.Serialize(dupl);
-
-           
+       
             await Clients.Group(groupname).SendAsync("PerosnHandler", $"{list}");
 
             await Clients.Group(groupname).SendAsync("Notify", $"{name} вошел в чат");
@@ -60,16 +60,28 @@ namespace ChatApplication.ChatHub
         }
 
 
-        public async Task Send(string message, string name)
-        {
-             name = Context.User.Identity.Name.ToString();
+        public static ConcurrentDictionary<string, List<string>> ConnectedUsers = new ConcurrentDictionary<string, List<string>>();
+            
+        public async Task Send(string message,string username)
+        {     
+             username = Context.User.Identity.Name.ToString();
+            List<string> existingUserConnectionIds;
+            ConnectedUsers.TryGetValue(username, out existingUserConnectionIds);
+            if (existingUserConnectionIds == null)
+            {
+                existingUserConnectionIds = new List<string>();
+            }
+
+            existingUserConnectionIds.Add(Context.ConnectionId);
+            var conn = Context.ConnectionId;
+
+            var currname = Context.User.Identity.Name;
             var personId = db.Person
-            .Where(c => c.name == name)
+            .Where(c => c.name == username)
             .Select(s => s.id)
             .FirstOrDefault();
 
             var localDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
-
           
             Chat chat = new Chat
             {
@@ -87,9 +99,12 @@ namespace ChatApplication.ChatHub
             {
                 throw ex;
             }
-                    
-            await Clients.Group(groupname).SendAsync("Receive", message, name);
+
+          
+            await Clients.Group(groupname).SendAsync("Receive", message, username);
+
         }
+
 
     }
 
