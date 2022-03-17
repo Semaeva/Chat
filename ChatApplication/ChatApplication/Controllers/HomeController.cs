@@ -69,17 +69,27 @@ namespace ChatApplication.Controllers
         {
             var list = from s in db.Chat
                        select s;
-            if (searcSrtring !=null)
+            try
+            {
+                if (searcSrtring !=null)
             {
                 var list_ = list.Where(x=>x.Person.name == searcSrtring)
                        .Include(s => s.Person).ToList();
                 return View(list_);
             }
-            try
-            {          
-             var list_ =  list.Where(x => x.d_time >= dateBegin && x.d_time <= dateEnd)
-                    .Include(s => s.Person).ToList(); 
+            if (dateBegin != null && dateEnd != null) {
+                var list_ = list.Where(x => x.d_time >= dateBegin && x.d_time <= dateEnd)
+                        .Include(s => s.Person).ToList();
                 return View(list_);
+            }
+          
+                if (dateBegin != null && dateEnd != null && searcSrtring !=null)
+            {
+                var list_ = list.Where(x => x.d_time >= dateBegin && x.d_time <= dateEnd && x.Person.name == searcSrtring)
+                        .Include(s => s.Person).ToList();
+                return View(list_);
+            }
+
             }
             catch (Exception ex) { };
             return View();

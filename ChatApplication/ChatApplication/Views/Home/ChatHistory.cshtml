@@ -8,37 +8,31 @@
     <title>История сообщений</title>
 </head>
 <body>
-  @ViewBag.t
+ <form asp-controller="Home" asp-action="ChatHistory" method="post">
+                        От <input type="datetime-local" name="dateBegin"/> - <input type="datetime-local" name="dateEnd"  />
+                      
+                        Имя пользователя   <input type="text" name="searcSrtring" />
+                        <input type="submit" class="btn" value ="Фильтр" />
+                        </form>
      <table class="table">
             <thead>
                 <tr>
 
                    <th>
-                @Html.DisplayNameFor(model => model.msg)
-            </th>
-                <th>
+                        @Html.DisplayNameFor(model => model.msg)
+                    </th>
+                    <th>
                     <a asp-action="ChatHistory" asp-route-sortOrder="@ViewData["NameSort"]">@Html.DisplayNameFor(model => model.Person.name)</a>
-                </th>
+                    </th>
 
-             <th>
+                    <th>
                     <a asp-action="ChatHistory" asp-route-sortOrder="@ViewData["DateSort"]">@Html.DisplayNameFor(model => model.d_time)</a>
-                </th>
-                <th>
-
-<form asp-controller="Home" asp-action="ChatHistory" method="post">
-                     <input type="datetime-local" name="dateBegin"  />
-                     <input type="datetime-local" name="dateEnd"  />
-
-                     <input type="submit" class="btn" value ="Send" />
-
-                       <input type="text" name="searcSrtring" />
-                      <input type="submit" class="btn" value ="Filter" />
-</form>
-
-                </th>
+                    </th>
+                
                 </tr>   
             </thead>
             <tbody>
+              
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -47,9 +41,15 @@
                         <td>@Html.DisplayFor(modelItem => item.d_time)</td>
                     </tr>
                 }
+                    
             </tbody>
         </table>
 
 
   </body>
   </html>
+
+  <style>
+  td {width:25%}
+  datetime-local{width:5%}
+  </style>
