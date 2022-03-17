@@ -147,18 +147,18 @@
         document.getElementById("sendBtn").addEventListener("click", function (e) {
    
             let message = document.getElementById("message").value;  
-            const  userName =document.getElementById("nameUser").innerHTML;
-            var name =document.getElementById("nameUser").innerHTML;
-
-            hubConnection.invoke("Send", message, userName);
-                     document.getElementById("message").value='';
+            var  userName =document.getElementById("nameUser").innerHTML;
+            //var name =document.getElementById("nameUser").innerHTML;
+            console.log(userName);
+            hubConnection.invoke("Send", message);
+            document.getElementById("message").value='';
         });
  
        
         hubConnection.start();
 
         setTimeout(function(){
-  $('#chatroom').remove();
+  $('#chatroom').hide();
 }, 15000);
     </script>
 

@@ -69,9 +69,9 @@ namespace ChatApplication.ChatHub
 
         public static ConcurrentDictionary<string, List<string>> ConnectedUsers = new ConcurrentDictionary<string, List<string>>();
             
-        public async Task Send(string message,string username)
+        public async Task Send(string message)
         {     
-             username = Context.User.Identity.Name.ToString();
+            var username = Context.User.Identity.Name.ToString();
             List<string> existingUserConnectionIds;
             ConnectedUsers.TryGetValue(username, out existingUserConnectionIds);
             if (existingUserConnectionIds == null)
