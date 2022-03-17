@@ -44,6 +44,12 @@ namespace ChatApplication.ChatHub
         }
         public override async Task OnConnectedAsync()
         {
+            var list_chat =( from s in db.Chat
+                            join p in db.Person on s.personID equals p.id
+                             orderby s.d_time descending 
+                             select new { person = p.name, chat = s.msg, dates = s.d_time }).Where(s=>s.dates >= DateTime.Today.AddDays(-1));
+         
+            var chats_json = JsonSerializer.Serialize(list_chat);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupname);
     
            var name = Context.User.Identity.Name;
@@ -54,6 +60,7 @@ namespace ChatApplication.ChatHub
             var list = JsonSerializer.Serialize(dupl);
        
             await Clients.Group(groupname).SendAsync("PerosnHandler", $"{list}");
+          await Clients.Group(groupname).SendAsync("ChatsLog", $"{chats_json}");
 
             await Clients.Group(groupname).SendAsync("Notify", $"{name} вошел в чат");
             await base.OnConnectedAsync();

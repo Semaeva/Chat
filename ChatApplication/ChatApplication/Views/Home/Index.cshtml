@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+   @* <meta charset="utf-8" />*@
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Групповой чат</title>
 </head>
 <body>
@@ -20,17 +21,15 @@
           <div class="px-4 d-none d-md-block">
             <div class="d-flex align-items-center">
               <div class="flex-grow-1">
-                <p class="form-control my-3">В сети </p>
+                <p class="form-control my-3">В сети </p>              
                       <table class="table">
             <thead>
-                <tr>
-                     
 
-                </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
+                     
                     <tr>
                         <td id="users"></td>
                     </tr>
@@ -57,12 +56,12 @@
                                        <div id="inputForm">
         <input type="text" id="message" />
         <input type="button" id="sendBtn" value="Отправить" />
-    </div>
-       <div id="chatroom"></div>
-                                  
+        </div>
+                    <div>  <div id="chatroom"></div>  </div>         
                                 </div>
               </div>
-              <div class="chat-message-left pb-4">
+             
+              <div class="chat-message-left pb-4" style="overflow-y: scroll; height:150px;">
                 <div>
 <img src="https://img.icons8.com/office/40/000000/chat.png"/>      
 <div class="text-muted small text-nowrap mt-2">2:34 am</div>
@@ -70,14 +69,16 @@
                 <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
                   <div class="font-weight-bold mb-1">
                                        <div id="left_chat"></div>
-                                       <div id="perosnHandler"></div>                                  
-                       </div>
-                            
+                                       <div id="perosnHandler"></div> 
+                                          <div id="chatsHistory"></div> 
+                       </div>   
+                     
                           </div>
+                         
+                    
                          </div>
+                             
 
- 
-    
 </div>
         </div>
       </div>
@@ -115,13 +116,15 @@
             
         // диагностическое сообщение
         hubConnection.on("Notify", function (message) {
-
+             document.getElementById("chatroom").innerHTML='';
             let elem = document.createElement("p");
             elem.id="nameUser";
+            elem.style.fontSize = "12px";
             elem.appendChild(document.createTextNode(message));
  
             var firstElem = document.getElementById("chatroom").firstChild;
             document.getElementById("chatroom").insertBefore(elem, firstElem);
+           
         });
 
         // подключенные клиенты
@@ -129,17 +132,34 @@
              var list_=  JSON.parse( list );
               document.getElementById("users").innerHTML=list_;
               });
+
+          hubConnection.on("ChatsLog", function (list) {  
+              document.getElementById("chatsHistory").innerHTML='';
+             var list_=  JSON.parse( list );
+             for (var i = 0; i < list_.length; i++) {           
+            var date = new Date(list_[i].dates);
+            document.getElementById("chatsHistory").innerHTML= document.getElementById("chatsHistory").innerHTML+ (list_[i].person +': '+ list_[i].chat+ ' отправлено в : ' +((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()+'<br>') ;
+
+        }
+              });
    
         // отправка сообщения на сервер
         document.getElementById("sendBtn").addEventListener("click", function (e) {
-            let message = document.getElementById("message").value;
+   
+            let message = document.getElementById("message").value;  
             const  userName =document.getElementById("nameUser").innerHTML;
             var name =document.getElementById("nameUser").innerHTML;
 
             hubConnection.invoke("Send", message, userName);
+                     document.getElementById("message").value='';
         });
  
+       
         hubConnection.start();
+
+        setTimeout(function(){
+  $('#chatroom').remove();
+}, 15000);
     </script>
 
     </body>
@@ -192,5 +212,21 @@
 }
 
 
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 </style>
