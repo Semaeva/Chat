@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/wwwroot/css/Footer.css">
+    <link rel="stylesheet" href="/wwwroot/css/burger.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/wwwroot/css/popup.css">
+</head>
+<body>
+    <header>
+        <div class="menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu">
+            <nav>
+                <li><a href="#" class="open-popup">Вход</a></li>
+            </nav>
+        </div>
+        <div class="popup__bg">
+            <form class="popup">
+                <img src="/wwwroot/img/close.svg" class="close-popup">
+                <label>
+                    <input type="text" name="name">
+                    <div class="label__text">
+                        Ваш логин
+                    </div>
+                </label>
+
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </header>
+    <footer>
+        <div class="InputForm">
+            <div>
+                <input type="text" id="message"  class="InputText"  placeholder="Введите сообщение"/>
+            </div>
+            <div>
+                <button class="InputBackground">
+                    <img src="/wwwroot/img/Send.svg" class="ImgInput">
+                </button>
+            </div>
+        </div>
+    </footer>
+    <script src="/wwwroot/js/burger.cs.js"></script>
+    <script src="/wwwroot/js/popup.js"></script>
+</body>
+</html>
